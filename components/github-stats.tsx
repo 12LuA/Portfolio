@@ -18,19 +18,7 @@ const formatNumber = (value: number): string => {
 }
 
 export function GithubStatsCard({ username }: GithubStatsCardProps) {
-  const { stats, loading, error } = useGithubStats(username)
-
-  const display = (key: keyof GithubStats): string => {
-    if (loading) {
-      return "..."
-    }
-
-    if (error || !stats) {
-      return "-"
-    }
-
-    return formatNumber(stats[key])
-  }
+  const { stats } = useGithubStats()
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -41,7 +29,7 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
             Repositories
           </CardTitle>
           <CardDescription className="text-3xl font-semibold text-primary">
-            {display("repositories")}
+            {formatNumber(stats.repos)}
           </CardDescription>
         </CardHeader>
       </Card>
@@ -53,7 +41,7 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
             Total Stars
           </CardTitle>
           <CardDescription className="text-3xl font-semibold text-primary">
-            {display("totalStars")}
+            {formatNumber(stats.stars)}
           </CardDescription>
         </CardHeader>
       </Card>
@@ -65,7 +53,7 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
             Contributions
           </CardTitle>
           <CardDescription className="text-3xl font-semibold text-primary">
-            {display("contributions")}
+            {formatNumber(stats.contributions)}
           </CardDescription>
         </CardHeader>
       </Card>
@@ -77,14 +65,10 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
             Pull Requests
           </CardTitle>
           <CardDescription className="text-3xl font-semibold text-primary">
-            {display("pullRequests")}
+            {formatNumber(stats.pullRequests)}
           </CardDescription>
         </CardHeader>
       </Card>
-
-      {error ? (
-        <p className="sm:col-span-2 text-xs text-destructive">{error}</p>
-      ) : null}
     </div>
   )
 }
