@@ -4,6 +4,7 @@ export type GithubStats = {
   repositories: number
   totalStars: number
   contributions: number
+  pullRequests: number
 }
 
 type UseGithubStatsResult = {
@@ -25,82 +26,18 @@ export function useGithubStats(username: string): UseGithubStatsResult {
         setLoading(true)
         setError(null)
 
-        const userResponse = await fetch(
-          `https://api.github.com/users/${encodeURIComponent(username)}`,
-          {
-            signal: controller.signal,
-            headers: {
-              Accept: "application/vnd.github+json",
-            },
-          },
-        )
+        const statsResponse = await fetch("/github-stats.json", {
+          signal: controller.signal,
+        })
 
-        if (!userResponse.ok) {
-          throw new Error("GitHub user not found")
+        if (!statsResponse.ok) {
+          throw new Error("GitHub stats could not be loaded")
         }
 
-        const user = (await userResponse.json()) as {
-          public_repos: number
-        }
-
-        const contributionsResponse = await fetch(
-          `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=all`,
-          {
-            signal: controller.signal,
-          },
-        )
-
-        if (!contributionsResponse.ok) {
-          throw new Error("GitHub contributions could not be loaded")
-        }
-
-        const contributionsData = (await contributionsResponse.json()) as {
-          total: Record<string, number>
-        }
-
-        const contributions = Object.values(contributionsData.total).reduce(
-          (sum, value) => sum + value,
-          0,
-        )
-
-        let totalStars = 0
-        let page = 1
-        let hasMoreRepos = true
-
-        while (hasMoreRepos) {
-          const reposResponse = await fetch(
-            `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&page=${page}&sort=updated`,
-            {
-              signal: controller.signal,
-              headers: {
-                Accept: "application/vnd.github+json",
-              },
-            },
-          )
-
-          if (!reposResponse.ok) {
-            throw new Error("GitHub repos could not be loaded")
-          }
-
-          const repos = (await reposResponse.json()) as Array<{
-            stargazers_count: number
-          }>
-
-          totalStars += repos.reduce(
-            (sum, repo) => sum + repo.stargazers_count,
-            0,
-          )
-
-          hasMoreRepos = repos.length === 100
-          page += 1
-        }
+        const statsData = (await statsResponse.json()) as GithubStats
 
         if (!controller.signal.aborted) {
-          setStats({
-            repositories: user.public_repos,
-            totalStars,
-            contributions,
-          })
+          setStats(statsData)
         }
       } catch {
         if (!controller.signal.aborted) {

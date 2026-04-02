@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { useGithubStats, type GithubStats } from "@/hooks/use-github-stats"
-import { ChartLine, Folder, Star } from "lucide-react"
+import { ChartLine, Folder, GitPullRequest, Star } from "lucide-react"
 
 type GithubStatsCardProps = {
   username: string
@@ -66,6 +66,18 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
           </CardTitle>
           <CardDescription className="text-3xl font-semibold text-primary">
             {display("contributions")}
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card className="bg-white/2 hover:bg-white/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-sm text-muted-foreground">
+            <GitPullRequest className="h-4 w-4" />
+            Pull Requests
+          </CardTitle>
+          <CardDescription className="text-3xl font-semibold text-primary">
+            {display("pullRequests")}
           </CardDescription>
         </CardHeader>
       </Card>
