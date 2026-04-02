@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: generate stats 
-        run: node scripts/fetchGithubStats.js
+        run: node .github/scripts/fetchGithubStats.js
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
