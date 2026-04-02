@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 export type GithubStats = {
   repositories: number
   totalStars: number
+  contributions: number
 }
 
 type UseGithubStatsResult = {
@@ -42,6 +43,26 @@ export function useGithubStats(username: string): UseGithubStatsResult {
           public_repos: number
         }
 
+        const contributionsResponse = await fetch(
+          `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=all`,
+          {
+            signal: controller.signal,
+          },
+        )
+
+        if (!contributionsResponse.ok) {
+          throw new Error("GitHub contributions could not be loaded")
+        }
+
+        const contributionsData = (await contributionsResponse.json()) as {
+          total: Record<string, number>
+        }
+
+        const contributions = Object.values(contributionsData.total).reduce(
+          (sum, value) => sum + value,
+          0,
+        )
+
         let totalStars = 0
         let page = 1
         let hasMoreRepos = true
@@ -78,6 +99,7 @@ export function useGithubStats(username: string): UseGithubStatsResult {
           setStats({
             repositories: user.public_repos,
             totalStars,
+            contributions,
           })
         }
       } catch {
