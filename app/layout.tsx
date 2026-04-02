@@ -23,7 +23,7 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>{children} <div className='background-gradient' /></ThemeProvider>
       </body>
     </html>
   )
