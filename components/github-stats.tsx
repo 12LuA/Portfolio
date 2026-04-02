@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { useGithubStats, type GithubStats } from "@/hooks/use-github-stats"
-import { Folder } from "lucide-react"
+import { Folder, Star } from "lucide-react"
 
 type GithubStatsCardProps = {
   username: string
@@ -33,7 +33,7 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <Card className="bg-white/2 hover:bg-white/10">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -46,8 +46,20 @@ export function GithubStatsCard({ username }: GithubStatsCardProps) {
         </CardHeader>
       </Card>
 
+      <Card className="bg-white/2 hover:bg-white/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Star className="h-4 w-4" />
+            Total Stars
+          </CardTitle>
+          <CardDescription className="text-3xl font-semibold text-primary">
+            {display("totalStars")}
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
       {error ? (
-        <p className="text-xs text-destructive">{error}</p>
+        <p className="sm:col-span-2 text-xs text-destructive">{error}</p>
       ) : null}
     </div>
   )

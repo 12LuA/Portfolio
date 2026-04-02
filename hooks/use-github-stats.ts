@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 
 export type GithubStats = {
   repositories: number
+  totalStars: number
 }
 
 type UseGithubStatsResult = {
@@ -41,9 +42,42 @@ export function useGithubStats(username: string): UseGithubStatsResult {
           public_repos: number
         }
 
+        let totalStars = 0
+        let page = 1
+        let hasMoreRepos = true
+
+        while (hasMoreRepos) {
+          const reposResponse = await fetch(
+            `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&page=${page}&sort=updated`,
+            {
+              signal: controller.signal,
+              headers: {
+                Accept: "application/vnd.github+json",
+              },
+            },
+          )
+
+          if (!reposResponse.ok) {
+            throw new Error("GitHub repos could not be loaded")
+          }
+
+          const repos = (await reposResponse.json()) as Array<{
+            stargazers_count: number
+          }>
+
+          totalStars += repos.reduce(
+            (sum, repo) => sum + repo.stargazers_count,
+            0,
+          )
+
+          hasMoreRepos = repos.length === 100
+          page += 1
+        }
+
         if (!controller.signal.aborted) {
           setStats({
             repositories: user.public_repos,
+            totalStars,
           })
         }
       } catch {
