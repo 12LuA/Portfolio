@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { GithubStatsCard } from "@/components/github-stats"
+import { ModeToggle } from "@/components/theme-button"
 
 export default function Page() {
   return (
@@ -21,6 +22,10 @@ export default function Page() {
           <h2 className="mb-3 text-lg font-semibold">GitHub Stats</h2>
           <GithubStatsCard />
         </div>
+      </div>
+      
+      <div className="fixed bottom-6 right-6">
+        <ModeToggle />
       </div>
     </div>
   )
