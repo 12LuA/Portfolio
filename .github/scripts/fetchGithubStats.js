@@ -117,11 +117,11 @@ async function fetchRepoStats() {
   };
 }
 
-async function fetchContributions() {
+async function fetchContributions(createdAtIso) {
   const query = `
-    query Contributions($username: String!) {
+    query Contributions($username: String!, $from: DateTime!, $to: DateTime!) {
       user(login: $username) {
-        contributionsCollection {
+        contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
             totalContributions
           }
@@ -130,17 +130,32 @@ async function fetchContributions() {
     }
   `;
 
-  const data = await graphqlRequest(query, {
-    username: USERNAME,
-  });
+  const startYear = new Date(createdAtIso).getUTCFullYear();
+  const endYear = new Date().getUTCFullYear();
 
-  return data.user.contributionsCollection.contributionCalendar.totalContributions;
+  let totalContributions = 0;
+
+  for (let year = startYear; year <= endYear; year += 1) {
+    const from = `${year}-01-01T00:00:00Z`;
+    const to = `${year}-12-31T23:59:59Z`;
+
+    const data = await graphqlRequest(query, {
+      username: USERNAME,
+      from,
+      to,
+    });
+
+    totalContributions +=
+      data.user.contributionsCollection.contributionCalendar.totalContributions;
+  }
+
+  return totalContributions;
 }
 
 async function fetchStats() {
   const baseData = await fetchUserBaseData();
   const repoData = await fetchRepoStats();
-  const contributions = await fetchContributions();
+  const contributions = await fetchContributions(baseData.createdAt);
 
   return {
     followers: baseData.followers,
