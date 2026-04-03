@@ -1,13 +1,16 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { GithubStatsCard } from "@/components/github-stats"
 import { Projects } from "@/components/projects"
 import { ModeToggle } from "@/components/theme-button"
 import { Separator } from "@/components/ui/separator"
-import { FaGithub } from "react-icons/fa6"
 import { usePlausible } from "next-plausible"
+import { FaGithub } from "react-icons/fa6"
 
 export default function Page() {
   const plausible = usePlausible()
+
   const handleClick = () => {
     plausible("Button clicked", {
       props: {
@@ -16,6 +19,7 @@ export default function Page() {
       },
     })
   }
+
   return (
     <div className="min-h-svh p-15">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-15 md:flex-row md:items-start md:justify-between">
