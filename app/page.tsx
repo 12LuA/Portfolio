@@ -29,22 +29,16 @@ export default function Page() {
                   rel="noopener noreferrer"
                   aria-label="Open GitHub profile"
                 >
-                  <FaGithub aria-hidden="true" className="size-4" />
+                  <FaGithub />
                 </a>
               </Button>
             </div>
           </div>
           <Separator />
           <div>
-            <h1 className="font-medium">Project ready!</h1>
-            <p>You may now add components and start building.</p>
-            <p>We&apos;ve already added the button component for you.</p>
-            
+            <h1 className="text-2xl">Projects</h1>
           </div>
           <Projects />
-          <div className="font-mono text-xs text-muted-foreground">
-            (Press <kbd>d</kbd> to toggle dark mode)
-          </div>
         </div>
 
         <div className="w-full max-w-md">
