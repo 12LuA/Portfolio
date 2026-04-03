@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
 import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,17 +12,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 
-export default function NotFound() {
-  useEffect(() => {
-    if (window.plausible) {
-      window.plausible("404", {
-        props: {
-          path: window.location.pathname,
-        },
-      });
-    }
-  }, []);
 
+export default function NotFound() {
   return (
     <Empty className="min-h-[80vh]">
       <EmptyHeader>

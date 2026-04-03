@@ -4,6 +4,7 @@ import Script from "next/script"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
+import PlausibleProvider from "next-plausible";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -28,13 +29,16 @@ export default function RootLayout({
         geist.variable
       )}
     >
+      <head>
+        <PlausibleProvider
+          trackLocalhost
+          enabled
+          domain="12lua.github.io"
+          customDomain="analytics.12lua.de"
+        />
+      </head>
       <body>
         <ThemeProvider>
-          <script
-          defer
-          data-domain="12lua.github.io"
-          src="https://analytics.12lua.de/js/script.js"
-        ></script>
           {children}
           <div className="background-gradient" />
         </ThemeProvider>
