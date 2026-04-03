@@ -33,6 +33,11 @@ export default function RootLayout({
           domain="12lua.github.io"
           selfHosted={true}
           customDomain="https://analytics.12lua.de"
+          trackOutboundLinks={true}
+          trackFileDownloads={true}
+          taggedEvents={true}
+          revenue={true}
+          enabled={true}
         >
           <ThemeProvider>
             {children}
