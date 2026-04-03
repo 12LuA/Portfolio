@@ -3,7 +3,7 @@ import { GithubStatsCard } from "@/components/github-stats"
 import { Projects } from "@/components/projects"
 import { ModeToggle } from "@/components/theme-button"
 import { Separator } from "@/components/ui/separator"
-import { siGithub } from "simple-icons"
+import { FaGithub } from "react-icons/fa6"
 
 export default function Page() {
   return (
@@ -19,13 +19,7 @@ export default function Page() {
                 rel="noopener noreferrer"
                 aria-label="Open GitHub profile"
               >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="size-4 fill-current"
-                >
-                  <path d={siGithub.path} />
-                </svg>
+                <FaGithub aria-hidden="true" className="size-4" />
               </a>
             </Button>
           </div>

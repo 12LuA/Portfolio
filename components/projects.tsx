@@ -7,50 +7,45 @@ import {
   CardTitle,
   CardAction,
 } from "@/components/ui/card"
+import { FaGithub } from "react-icons/fa6"
 import { Eye, Star } from "lucide-react"
-import { siGithub } from "simple-icons"
 
 export function Projects() {
   const statButtonClass =
     "h-auto flex-1 gap-1.5 py-2.5 text-xs font-medium text-muted-foreground/70"
 
   return (
-    <Card className="mx-auto w-full max-w-sm bg-white/4 transition-colors hover:bg-white/5">
-      <CardHeader className="pb-0">
-        <CardTitle>12lua.github.io</CardTitle>
-        <CardAction>
-          <div className="flex items-center gap-1">
+    <>
+      <Card className="mx-auto w-full max-w-sm bg-white/4 transition-colors hover:bg-white/5">
+        <CardHeader>
+          <CardTitle>12lua.github.io</CardTitle>
+          <CardDescription>
+            My personal website showcasing projects and portfolio
+          </CardDescription>
+          <CardAction className="flex items-center gap-1 text-muted-foreground/80">
             <Star className="size-3.5 text-muted-foreground/60" />
-            <span className="text-muted-foreground/80">0</span>
-          </div>
-        </CardAction>
-        <CardDescription>
-          My personal website showcasing projects and portfolio
-        </CardDescription>
-      </CardHeader>
-      <CardFooter className="p-0">
-        <Button asChild variant="ghost" className={statButtonClass}>
-          <a
-            href="https://github.com/12LuA/12lua.github.io"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="size-4 fill-current"
+            <span>0</span>
+          </CardAction>
+        </CardHeader>
+        <CardFooter className="p-0">
+          <Button asChild variant="ghost" className={statButtonClass}>
+            <a
+              href="https://github.com/12LuA/12lua.github.io"
+              target="_blank"
+              rel="noopener"
             >
-              <path d={siGithub.path} />
-            </svg>
-            <span>GitHub</span>
-          </a>
-        </Button>
-        <Button variant="ghost" className={statButtonClass}>
-          <Eye className="size-4" />
-          <span>View</span>
-        </Button>
-      </CardFooter>
-    </Card>
-    
+              <FaGithub aria-hidden="true" className="size-4" />
+              <span>GitHub</span>
+            </a>
+          </Button>
+          <Button asChild variant="ghost" className={statButtonClass}>
+            <a href="https://12lua.github.io" target="_blank" rel="noopener">
+              <Eye className="size-4" />
+              <span>View</span>
+            </a>
+          </Button>
+        </CardFooter>
+      </Card>
+    </>
   )
 }
