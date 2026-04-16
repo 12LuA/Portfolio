@@ -33,13 +33,19 @@ export function Projects() {
               href="https://github.com/12LuA/12lua.github.io"
               target="_blank"
               rel="noopener"
+              aria-label="Open GitHub repository: 12lua.github.io"
             >
               <FaGithub aria-hidden="true" className="size-4" />
               <span>GitHub</span>
             </a>
           </Button>
           <Button asChild variant="ghost" className={statButtonClass}>
-            <a href="https://12lua.github.io" target="_blank" rel="noopener">
+            <a
+              href="https://12lua.github.io"
+              target="_blank"
+              rel="noopener"
+              aria-label="View live project: 12lua.github.io"
+            >
               <Eye className="size-4" />
               <span>View</span>
             </a>
@@ -64,13 +70,19 @@ export function Projects() {
               href="https://github.com/12LuA/Cayo-Calculator"
               target="_blank"
               rel="noopener"
+              aria-label="Open GitHub repository: Cayo-Calculator"
             >
               <FaGithub aria-hidden="true" className="size-4" />
               <span>GitHub</span>
             </a>
           </Button>
           <Button asChild variant="ghost" className={statButtonClass}>
-            <a href="https://gta-tools.vercel.app/" target="_blank" rel="noopener">
+            <a
+              href="https://gta-tools.vercel.app/"
+              target="_blank"
+              rel="noopener"
+              aria-label="View live project: GTA Tools"
+            >
               <Eye className="size-4" />
               <span>View</span>
             </a>
